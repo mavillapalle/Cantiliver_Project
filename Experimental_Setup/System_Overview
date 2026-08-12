@@ -1,1 +1,60 @@
+## System Overview
 
+The cantilever characterisation system is designed to measure the free-vibration response of a cantilever and determine its natural frequency, damping ratio, and quality factor.
+
+The system consists of two main parts: the optical measurement path and the electrical signal-processing path.
+
+### Optical Path
+
+The optical lever uses a laser beam directed towards the vibrating cantilever. The reflected beam is guided using two mirrors and falls on a Position Sensitive Detector (PSD). When the cantilever vibrates, its small angular movement causes a corresponding displacement of the laser spot on the PSD.
+
+```text
+Laser
+  ↓
+Mirror 1
+  ↓
+Cantilever
+  ↓
+Mirror 2
+  ↓
+Position Sensitive Detector (PSD)
+
+
+### Electrical path
+
+PSD
+ ↓
+Transimpedance Amplifier (MCP6002)
+ ↓
+Differential Amplifier (LM324)
+ ↓
+PicoScope
+ ↓
+Python Data Analysis
+
+                 OPTICAL PATH
+┌───────┐    ┌────────┐    ┌────────────┐    ┌────────┐    ┌─────┐
+│ Laser │ →  │ Mirror │ → │ Cantilever │ →  │ Mirror │ →  │ PSD │
+└───────┘    │   1    │    └────────────┘    │   2    │    └─────┘
+             └────────┘                       └────────┘       │
+                                                              ↓
+                 ELECTRICAL PATH                    Photocurrent
+                                                              ↓
+                                                     ┌─────────────┐
+                                                     │ TIA MCP6002 │
+                                                     └─────────────┘
+                                                              ↓
+                                                     ┌─────────────┐
+                                                     │ Differential│
+                                                     │ Amplifier   │
+                                                     │   LM324     │
+                                                     └─────────────┘
+                                                              ↓
+                                                     ┌─────────────┐
+                                                     │  PicoScope  │
+                                                     └─────────────┘
+                                                              ↓
+                                                     ┌─────────────┐
+                                                     │    Python   │
+                                                     │ Data Analysis│
+                                                     └─────────────┘
