@@ -3,35 +3,42 @@
 ## 📌 Project Overview
 
 This project focuses on the experimental characterisation of a
-cantilever using an optical lever measurement system and a Position
-Sensitive Detector (PSD).
+cantilever using an optical lever measurement system.
 
-The main aim is to measure the free-vibration response of a cantilever
+The main aim was to measure the free-vibration response of a cantilever
 and determine its:
 
 - Natural Frequency
 - Damping Ratio
 - Quality Factor
 
-The measured optical signal is converted into an electrical signal
-using analogue signal-conditioning circuits, acquired using a PicoScope,
-and analysed using Python.
+A laser beam was reflected from the vibrating cantilever onto a
+Position Sensitive Detector (PSD). The PSD output was converted into a
+voltage using analogue signal-conditioning circuits. The signal was
+then acquired using PicoScope and analysed using Python.
 
 Three cantilever configurations were investigated:
 
-1. Normal Cantilever
-2. Drop Cantilever
-3. Mass Cantilever
+- Normal Cantilever
+- Drop Cantilever
+- Mass Cantilever
+
+The complete system combines optical measurement, analogue electronics,
+data acquisition and digital signal processing.
 
 ---
 
 # 🎯 Objectives
 
-The main objectives of the project were:
+The main objective was to develop an optical-lever measurement chain
+capable of capturing the free-vibration response of a cantilever.
 
-- Develop an optical-lever measurement system.
-- Detect small cantilever vibrations using a PSD.
-- Convert PSD photocurrent into voltage using a Transimpedance Amplifier.
+The project objectives were:
+
+- Set up the optical lever measurement system.
+- Detect small cantilever movements using a PSD.
+- Convert the PSD photocurrent into a measurable voltage.
+- Design and test the Transimpedance Amplifier.
 - Extract the differential signal using a differential amplifier.
 - Acquire the signal using PicoScope.
 - Process the measured signal using Python.
@@ -39,7 +46,11 @@ The main objectives of the project were:
 - Determine the damping ratio.
 - Calculate the quality factor.
 - Compare different cantilever configurations.
-- Analyse the signal using time-domain and frequency-domain methods.
+- Cross-check the vibration results using different signal-processing
+  methods.
+
+The project was designed to obtain frequency and damping information from
+both time-domain and frequency-domain measurements. :contentReference[oaicite:1]{index=1}
 
 ---
 
@@ -48,6 +59,8 @@ The main objectives of the project were:
 The complete measurement chain is:
 
 ```text
+                    OPTICAL PATH
+                        
 Laser
   ↓
 Mirror 1
@@ -58,26 +71,34 @@ Mirror 2
   ↓
 Position Sensitive Detector (PSD)
   ↓
+              ELECTRICAL PATH
+  ↓
 Transimpedance Amplifier (TIA)
   ↓
 Differential Amplifier
   ↓
 PicoScope
   ↓
-Python Data Analysis
+Python Signal Processing
 ```
 
-The laser beam is reflected from the vibrating cantilever and directed
-towards the PSD.
+The laser is directed onto the cantilever.
 
-The PSD converts the movement of the laser spot into photocurrents.
-These small currents are converted into voltage signals using two
-Transimpedance Amplifiers.
+When the cantilever vibrates, the reflected laser beam moves across the
+PSD.
 
-The two voltage signals are then processed by a differential amplifier
-to obtain a single output voltage.
+The PSD converts the laser spot movement into photocurrents.
+
+The Transimpedance Amplifier converts these small photocurrents into
+voltage signals.
+
+The differential amplifier combines the two signals to produce the
+measurement output.
 
 The output is acquired using PicoScope and analysed using Python.
+
+This optical-to-electrical signal chain is the central measurement
+system used in the project. :contentReference[oaicite:2]{index=2}
 
 ---
 
@@ -86,78 +107,105 @@ The output is acquired using PicoScope and analysed using Python.
 ## Main Components
 
 - Laser diode module
-- Two steering mirrors
+- Steering mirrors
 - Microcantilever
 - Hamamatsu S3932 Position Sensitive Detector
-- MCP6002 Transimpedance Amplifiers
-- LM324 Differential Amplifier
-- PicoScope 2000 Series
+- MCP6002 operational amplifier
+- LM324 operational amplifier
+- Transimpedance Amplifier
+- Differential Amplifier
+- PicoScope
 - Optical breadboard
-- Python / Jupyter
 - LTspice
 - KiCad
+- Python / Jupyter
 
-Three cantilever configurations were tested:
-
-```text
-Normal Cantilever
-       ↓
-Drop-loaded Cantilever
-       ↓
-Mass-loaded Cantilever
-```
-
-The cantilever was lightly tapped to initiate free vibration.
+The physical setup used optical posts, kinematic mirror mounts, a fixed
+cantilever clamp and a vibration-damped optical breadboard. :contentReference[oaicite:3]{index=3}
 
 ---
 
 # 💡 Optical Lever Principle
 
-The optical measurement is based on the law of reflection.
+The measurement is based on the law of reflection.
+
+When a laser beam strikes a reflective surface:
 
 \[
 \theta_i = \theta_r
 \]
 
-where:
+### What does this mean?
+
+The angle at which the laser hits the mirror is equal to the angle at
+which it is reflected.
+
+Where:
 
 - \(\theta_i\) = angle of incidence
 - \(\theta_r\) = angle of reflection
 
-For small angular movements of the cantilever:
+When the cantilever rotates by a small angle \(\theta\), the reflected
+beam rotates by approximately twice that angle:
 
 \[
 \theta_r = 2\theta
 \]
 
-where:
+This means a very small cantilever movement produces a larger movement
+of the laser spot at the detector.
 
-- \(\theta\) = angular displacement of the cantilever
-- \(\theta_r\) = angular displacement of the reflected beam
-
-If the detector is at a distance \(D\) from the mirror, the laser spot
-displacement is approximately:
+If the detector is placed at a distance \(D\), the approximate laser
+spot displacement is:
 
 \[
 x \approx 2D\theta
 \]
 
-where:
+Where:
 
-- \(x\) = laser spot displacement
-- \(D\) = distance between mirror and detector
-- \(\theta\) = cantilever angular displacement
+- \(x\) = displacement of the laser spot
+- \(D\) = distance between the reflecting surface and PSD
+- \(\theta\) = angular displacement of the cantilever
 
-This provides optical amplification of the small cantilever movement.
+### In simple terms
+
+```text
+Small Cantilever Rotation
+          ↓
+Reflected Beam Rotates
+          ↓
+Laser Spot Moves More
+          ↓
+PSD Detects the Movement
+```
+
+This is why the optical lever can detect very small cantilever
+vibrations.
+
+The report describes this reflection principle and the doubled reflected
+angle in the experimental theory. :contentReference[oaicite:4]{index=4}
 
 ---
 
 # 📡 Position Sensitive Detector
 
-A Hamamatsu S3932 one-dimensional lateral-effect PSD was used to detect
-the position of the laser beam.
+The Position Sensitive Detector converts the position of the laser spot
+into electrical currents.
 
-The position of the incident beam is calculated using the two photocurrents:
+The PSD has two output currents:
+
+\[
+I_{x1}
+\]
+
+and
+
+\[
+I_{x2}
+\]
+
+The laser position is calculated using:
 
 \[
 x =
@@ -166,19 +214,43 @@ x =
 {I_{x1}+I_{x2}}
 \]
 
-where:
+### What does this formula mean?
 
-- \(x\) = position of the incident beam
-- \(l_x\) = length of the resistive layer
+The numerator:
+
+\[
+I_{x1}-I_{x2}
+\]
+
+tells us how different the two currents are.
+
+The denominator:
+
+\[
+I_{x1}+I_{x2}
+\]
+
+normalises the measurement based on the total detected current.
+
+The resulting value gives the position of the laser spot on the PSD.
+
+Where:
+
+- \(x\) = laser spot position
+- \(l_x\) = length of the PSD resistive layer
 - \(I_{x1}\) = current from the first electrode
 - \(I_{x2}\) = current from the second electrode
+
+This PSD position equation is given in the project report. :contentReference[oaicite:5]{index=5}
 
 ---
 
 # 📐 Cantilever Natural Frequency
 
-The first-mode natural frequency of a uniform cantilever is given by
-Euler-Bernoulli beam theory:
+Natural frequency is the frequency at which the cantilever naturally
+vibrates after it is disturbed.
+
+For a uniform cantilever beam, the first-mode natural frequency is:
 
 \[
 f_1 =
@@ -187,68 +259,94 @@ f_1 =
 \sqrt{\frac{EI}{mL^4}}
 \]
 
-where:
+Where:
 
 - \(f_1\) = first natural frequency
-- \(E\) = modulus of elasticity
+- \(\beta_1 = 1.875\) for the first vibration mode
+- \(E\) = Young's modulus
 - \(I\) = area moment of inertia
 - \(m\) = mass per unit length
 - \(L\) = cantilever length
-- \(\beta_1 = 1.875\) for the first mode
 
-### Effect of Parameters
+### Effect of mass
 
-| Parameter | Effect on Natural Frequency |
-|-----------|-----------------------------|
-| Increase in \(E\) | Frequency increases |
-| Increase in \(I\) | Frequency increases |
-| Increase in \(L\) | Frequency decreases |
-| Increase in \(m\) | Frequency decreases |
+The important relationship for this project is:
 
-Adding mass increases the effective inertia of the cantilever and
-therefore reduces its natural frequency.
+```text
+Additional Mass
+      ↓
+Higher Effective Inertia
+      ↓
+Lower Natural Frequency
+```
+
+This behaviour was observed experimentally: the Normal cantilever had
+the highest frequency, while the Mass cantilever had the lowest. :contentReference[oaicite:6]{index=6}
 
 ---
 
 # 🌊 Damping
 
-The free vibration of a damped cantilever can be represented as:
+When the cantilever is tapped and released, it vibrates freely.
+
+The amplitude gradually decreases because energy is lost through
+damping mechanisms such as friction and drag.
+
+The damped vibration can be represented as:
 
 \[
-x(t) =
-Ae^{-\delta t}
-\cos(\omega_d t+\phi)
+x(t)=Ae^{-\delta t}
+\cos(\omega_dt+\phi)
 \]
 
-where:
+### What does this equation show?
 
-- \(x(t)\) = displacement
+The cosine part:
+
+\[
+\cos(\omega_dt+\phi)
+\]
+
+represents the oscillation.
+
+The exponential part:
+
+\[
+e^{-\delta t}
+\]
+
+represents the decrease in amplitude over time.
+
+Where:
+
+- \(x(t)\) = displacement at time \(t\)
 - \(A\) = initial amplitude
 - \(\delta\) = damping constant
-- \(\omega_d\) = damped natural angular frequency
+- \(\omega_d\) = damped angular frequency
 - \(\phi\) = initial phase
 - \(t\) = time
-
-The vibration amplitude decreases because mechanical energy is lost
-through effects such as air resistance and internal friction.
 
 ---
 
 # 📉 Logarithmic Decrement
 
-The logarithmic decrement is calculated from successive vibration peaks:
+Logarithmic decrement describes how quickly the vibration amplitude
+decreases from one peak to another.
+
+For two successive peaks:
 
 \[
 \Lambda =
 \ln\left(\frac{x_1}{x_2}\right)
 \]
 
-where:
+Where:
 
 - \(x_1\) = first peak amplitude
-- \(x_2\) = second peak amplitude
+- \(x_2\) = next peak amplitude
+- \(\Lambda\) = logarithmic decrement
 
-For peaks separated by \(n\) cycles:
+If the peaks are separated by \(n\) cycles:
 
 \[
 \Lambda =
@@ -256,17 +354,28 @@ For peaks separated by \(n\) cycles:
 \ln\left(\frac{x_1}{x_{n+1}}\right)
 \]
 
-where:
+### Simple interpretation
 
-- \(n\) = number of cycles
-- \(x_1\) = initial peak amplitude
-- \(x_{n+1}\) = peak amplitude after \(n\) cycles
+```text
+Large Peak
+    ↓
+Smaller Peak
+    ↓
+Smaller Peak
+    ↓
+Smaller Peak
+```
+
+The faster the amplitude decreases, the greater the damping.
 
 ---
 
 # 📊 Damping Ratio
 
-The damping ratio is calculated using:
+The damping ratio tells us how strongly the cantilever vibration is
+damped.
+
+It is calculated from logarithmic decrement as:
 
 \[
 \zeta =
@@ -274,67 +383,92 @@ The damping ratio is calculated using:
 {\sqrt{4\pi^2+\Lambda^2}}
 \]
 
-where:
+Where:
 
 - \(\zeta\) = damping ratio
 - \(\Lambda\) = logarithmic decrement
 
-For the peak-detection method used in the analysis, the report also
-uses the approximation:
+For a lightly damped system, the damping ratio is small.
 
-\[
-\zeta =
-\frac{\delta}{2\pi}
-\]
+The measured cantilevers had damping ratios in approximately the
+\(0.001\) to \(0.003\) range. :contentReference[oaicite:7]{index=7}
 
 ---
 
 # 🔄 Natural Angular Frequency
 
-The natural angular frequency is related to natural frequency by:
+The natural frequency can also be written as angular frequency:
 
 \[
 \omega_n = 2\pi f_n
 \]
 
-where:
+Where:
 
-- \(\omega_n\) = natural angular frequency
-- \(f_n\) = natural frequency
+- \(\omega_n\) = natural angular frequency in rad/s
+- \(f_n\) = natural frequency in Hz
+
+### Example
+
+If:
+
+\[
+f_n = 472.03\ Hz
+\]
+
+then the corresponding angular frequency is obtained by multiplying the
+frequency by \(2\pi\).
 
 ---
 
 # ⚙️ Damping Constant
 
-The damping constant is:
+The damping constant is related to damping ratio and natural angular
+frequency:
 
 \[
 \delta = \zeta\omega_n
 \]
 
-where:
+Where:
 
 - \(\delta\) = damping constant
 - \(\zeta\) = damping ratio
 - \(\omega_n\) = natural angular frequency
 
+This connects the measured damping behaviour to the natural frequency
+of the cantilever.
+
 ---
 
 # ⭐ Quality Factor
 
-The quality factor describes the sharpness of the resonance.
+The quality factor \(Q\) describes the sharpness of the resonance.
 
-It is calculated from the damping ratio:
+For a lightly damped system:
 
 \[
 Q = \frac{1}{2\zeta}
 \]
 
-A higher \(Q\) corresponds to a sharper resonance and lower relative
-damping.
+Where:
 
-The report also expresses the quality factor in terms of stored and
-lost energy:
+- \(Q\) = quality factor
+- \(\zeta\) = damping ratio
+
+### What does a high Q mean?
+
+```text
+Low Damping
+     ↓
+Less Energy Lost
+     ↓
+Sharper Resonance
+     ↓
+Higher Q
+```
+
+The report also expresses quality factor using stored and lost energy:
 
 \[
 Q =
@@ -343,53 +477,81 @@ Q =
 {E_{\text{lost per cycle}}}
 \]
 
+Where:
+
+- \(E_{\text{stored}}\) = energy stored in the cantilever
+- \(E_{\text{lost per cycle}}\) = energy lost during one vibration cycle
+
+The increase in Q observed in the loaded configurations corresponds to
+narrower resonance bandwidths. :contentReference[oaicite:8]{index=8}
+
 ---
 
 # 🔌 Signal Conditioning
 
 ## Transimpedance Amplifier
 
-The PSD produces very small photocurrents. Two MCP6002-based
-Transimpedance Amplifiers were used to convert the photocurrents into
-voltage signals.
+The PSD produces very small photocurrents.
 
-The feedback resistor was:
+The Transimpedance Amplifier converts the photocurrent into a voltage
+signal.
+
+The basic relationship is:
+
+\[
+V_{out}=-I_{in}R_f
+\]
+
+Where:
+
+- \(V_{out}\) = output voltage
+- \(I_{in}\) = input photocurrent
+- \(R_f\) = feedback resistance
+
+The project used:
 
 \[
 R_f = 100\,k\Omega
 \]
 
-A feedback capacitor was used to improve stability.
+A feedback capacitor was also investigated to improve the amplifier
+stability and frequency response.
 
 ---
 
 # 📶 TIA Bandwidth
 
-The approximate Transimpedance Amplifier bandwidth is:
+The approximate bandwidth relationship used for the TIA is:
 
 \[
 BW =
 \frac{1}{2R_fC_{PSD}}
 \]
 
-where:
+Where:
 
+- \(BW\) = approximate bandwidth
 - \(R_f\) = feedback resistance
-- \(C_{PSD}\) = PSD terminal capacitance
+- \(C_{PSD}\) = PSD capacitance
 
-Increasing \(R_f\) increases gain but reduces the basic bandwidth.
+### Design trade-off
 
-LTspice was used to investigate the feedback capacitor and amplifier
-response.
+```text
+Higher Feedback Resistance
+          ↓
+Higher Gain
+          ↓
+Lower Basic Bandwidth
+```
 
-The simulation showed that approximately 20 pF to 30 pF provided a
-suitable response for the application.
+LTspice was used to investigate the PSD equivalent circuit and select
+suitable feedback components.
 
 ---
 
 # ➖ Differential Amplifier
 
-The two TIA output voltages are represented as:
+The two TIA channels produce two voltage signals:
 
 \[
 V_A
@@ -407,50 +569,64 @@ The differential amplifier produces:
 V_{out}=V_A-V_B
 \]
 
-An LM324 quad operational amplifier was used for the differential
-amplifier stage.
+Where:
 
-The resulting voltage was sent to the PicoScope for acquisition.
+- \(V_A\) = first TIA output
+- \(V_B\) = second TIA output
+- \(V_{out}\) = differential output
+
+The differential output is used as the final vibration measurement
+signal.
+
+An LM324 was used for the differential stage.
+
+The report states that the TIA and differential amplifier together
+provided the required measurable output for further signal processing.
+:contentReference[oaicite:9]{index=9}
 
 ---
 
 # 🧪 SPICE Simulation
 
-A 1D Pi-network equivalent model of the S3932 PSD was created in LTspice.
+LTspice was used to simulate the PSD and Transimpedance Amplifier.
 
-The model included:
+A 1D Pi-network equivalent circuit was used to represent the S3932 PSD.
 
-- PSD resistance
-- PSD capacitance
-- MCP6002 equivalent model
-- Feedback resistor
-- Feedback capacitor
+The simulation was used to investigate:
 
-Transient analysis and parameter sweeps were performed to investigate
-the circuit stability and suitable feedback capacitor values.
+- PSD behaviour
+- Feedback resistor selection
+- Feedback capacitor selection
+- Frequency response
+- Transient response
+- Circuit stability
+
+The final hardware schematic was created in KiCad.
 
 ---
 
 # 💻 Signal Processing
 
-The measured signal was acquired using PicoScope and processed in Python
-using Jupyter.
+The acquired vibration signal was processed using Python.
 
-The following analysis methods were implemented:
+Four signal-processing techniques were investigated:
 
 1. Fourier Transform (FFT)
 2. Peak Detection
 3. Zero-Crossing
 4. Parabolic Interpolation
 
+The report includes separate flowcharts and results for each of these
+methods. :contentReference[oaicite:10]{index=10}
+
 ---
 
 # 1️⃣ Fourier Transform (FFT)
 
-The Fourier Transform converts the signal from the time domain into the
+FFT converts the measured vibration signal from the time domain into the
 frequency domain.
 
-The FFT is calculated as:
+The Discrete Fourier Transform is:
 
 \[
 X_k =
@@ -458,11 +634,11 @@ X_k =
 x_n e^{-j2\pi kn/N}
 \]
 
-where:
+Where:
 
-- \(X_k\) = FFT output
-- \(x_n\) = input signal
-- \(N\) = number of samples
+- \(x_n\) = measured signal sample
+- \(X_k\) = frequency-domain value
+- \(N\) = total number of samples
 - \(k\) = frequency-bin index
 
 ## FFT Algorithm
@@ -478,10 +654,12 @@ Calculate FFT
     ↓
 Calculate Magnitude Spectrum
     ↓
-Locate Largest Peak
+Find Dominant Peak
     ↓
-Output Dominant Frequency
+Natural Frequency
 ```
+
+The dominant FFT peak represents the main resonance frequency.
 
 ## FFT Results
 
@@ -491,15 +669,21 @@ Output Dominant Frequency
 | Drop | 358.3 Hz |
 | Mass | 290.7 Hz |
 
+These are the FFT frequencies reported for the three configurations.
+:contentReference[oaicite:11]{index=11}
+
 ---
 
 # 2️⃣ Peak Detection Method
 
-The peak-detection method works directly on the time-domain signal.
+The peak detection method analyses the signal directly in the time
+domain.
 
-The signal is filtered and successive local maxima are detected.
+The raw signal is first filtered.
 
-The average time between peaks is used to calculate the vibration period.
+Local maxima are then detected.
+
+The time between successive peaks gives the vibration period.
 
 The natural frequency is:
 
@@ -507,25 +691,28 @@ The natural frequency is:
 f_n = \frac{1}{T}
 \]
 
-where:
+Where:
 
-- \(T\) = vibration period
 - \(f_n\) = natural frequency
+- \(T\) = vibration period
 
-The logarithmic decrement is:
+### In simple terms
 
-\[
-\delta =
-\frac{1}{n}
-\ln\left(\frac{x_0}{x_n}\right)
-\]
+If one vibration cycle takes more time:
 
-and the damping ratio used for this method is:
+```text
+Longer Period
+     ↓
+Lower Frequency
+```
 
-\[
-\zeta =
-\frac{\delta}{2\pi}
-\]
+If one vibration cycle takes less time:
+
+```text
+Shorter Period
+     ↓
+Higher Frequency
+```
 
 ## Peak Detection Algorithm
 
@@ -536,9 +723,9 @@ Band-Pass Filtering
     ↓
 Detect Local Peaks
     ↓
-Calculate Time Between Peaks
+Average Time Between Peaks
     ↓
-Calculate Average Period
+Calculate Period T
     ↓
 Calculate Natural Frequency
     ↓
@@ -547,44 +734,37 @@ Calculate Logarithmic Decrement
 Calculate Damping Ratio
 ```
 
-The peak amplitudes also provide information about the exponential
-decay of the cantilever vibration.
+This follows the peak-detection flow used in the report. :contentReference[oaicite:12]{index=12}
+
+### Damping from Peak Amplitudes
+
+The amplitude of the detected peaks decreases as the cantilever
+oscillation decays.
+
+The logarithmic decrement is calculated from the peak amplitudes:
+
+\[
+\Lambda =
+\frac{1}{n}
+\ln\left(\frac{x_1}{x_{n+1}}\right)
+\]
+
+The damping ratio can then be estimated from the logarithmic decrement.
 
 ---
 
 # 3️⃣ Zero-Crossing Method
 
-The zero-crossing method determines the natural frequency from the
-time-domain signal.
+The zero-crossing method provides another time-domain estimate of the
+natural frequency.
 
-A complete vibration cycle contains two zero crossings.
+The signal is first filtered using a Butterworth filter.
 
-The signal is first filtered using a Butterworth filter to reduce noise.
+The algorithm then identifies where the signal crosses the zero-amplitude
+line.
 
-Two neighbouring points around each crossing are used for interpolation.
-
-The zero-crossing time is calculated as:
-
-\[
-t_0 =
-t_1-\frac{v_1}{m}
-\]
-
-where:
-
-- \(t_0\) = estimated zero-crossing time
-- \(t_1\) = time of the neighbouring point
-- \(v_1\) = signal value at the neighbouring point
-- \(m\) = slope between the two points
-
-The time difference between consecutive crossings is calculated and
-averaged to determine the vibration period.
-
-The natural frequency is then:
-
-\[
-f_n = \frac{1}{T}
-\]
+Because the actual zero crossing can occur between two sampled points,
+linear interpolation is used.
 
 ## Zero-Crossing Algorithm
 
@@ -603,85 +783,135 @@ Linear Interpolation
     ↓
 Calculate Zero-Crossing Time
     ↓
-Calculate Time Differences
+Calculate Time Difference
     ↓
 Calculate Average Period
     ↓
-Calculate Frequency
+Calculate Natural Frequency
 ```
+
+### Linear Interpolation
+
+The zero-crossing time is estimated using:
+
+\[
+t_0 =
+t_1-\frac{v_1}{m}
+\]
+
+Where:
+
+- \(t_0\) = estimated zero-crossing time
+- \(t_1\) = time of the neighbouring point
+- \(v_1\) = signal value at that point
+- \(m\) = slope between the two neighbouring points
+
+### Frequency
+
+The period is obtained from alternating zero crossings:
+
+\[
+T=t_{i+2}-t_i
+\]
+
+Then:
+
+\[
+f_n=\frac{1}{T}
+\]
+
+### Why use zero crossing?
+
+It provides an independent time-domain frequency estimate that can be
+compared with the FFT and peak-detection results.
 
 ---
 
-# 4️⃣ Parabolic Interpolation of FFT Peak
+# 4️⃣ Parabolic Interpolation
 
-Parabolic interpolation was used to refine the FFT frequency estimate.
+The FFT provides frequency values at discrete frequency bins.
 
-The FFT produces discrete frequency bins, so the actual resonance
-frequency may lie between two bins.
+Therefore, the actual resonance peak may lie between two FFT bins.
 
-The method assumes a Gaussian-shaped peak:
+Parabolic interpolation is used to refine the position of the FFT peak.
+
+## Algorithm
+
+```text
+FFT Magnitude Spectrum
+        ↓
+Find Peak Bin k
+        ↓
+Take k-1, k and k+1
+        ↓
+Calculate ln(|X|)
+        ↓
+Fit Parabola
+        ↓
+Find Parabola Vertex
+        ↓
+Calculate Fractional Shift
+        ↓
+Calculate Refined Frequency
+```
+
+The report specifically uses the logarithm of the FFT magnitude at
+\(k-1\), \(k\), and \(k+1\), then calculates the vertex offset. :contentReference[oaicite:13]{index=13}
+
+### Parabolic Fit
+
+The three log-magnitude points are:
 
 \[
-Y =
-A e^{-\frac{(f-f_0)^2}{2\sigma^2}}
+L_{k-1},\quad L_k,\quad L_{k+1}
 \]
 
-Taking the logarithm:
+The fitted parabola can be written as:
 
 \[
-\ln Y =
-\ln A -
-\frac{(f-f_0)^2}{2\sigma^2}
+y=ax^2+bx+c
 \]
 
-This produces a parabolic relationship around the peak.
-
-The FFT peak bin is represented by \(k\).
-
-The neighbouring bins \(k-1\), \(k\), and \(k+1\) are used.
-
-The fractional shift is:
+The position of the parabola vertex is:
 
 \[
-\delta =
-\frac{L_{k-1}-L_{k+1}}
-{2(L_{k+1}-2L_k+L_{k-1})}
+\delta^*=-\frac{b}{2a}
 \]
+
+This value represents the fractional shift of the FFT peak.
+
+### Refined Frequency
 
 The refined frequency is:
 
 \[
 f_{\text{refined}}
 =
-(k+\delta)\Delta f
+(k+\delta^*)\Delta f
 \]
 
-where:
+Where:
 
-- \(k\) = dominant FFT peak bin
-- \(\delta\) = fractional peak shift
-- \(\Delta f\) = FFT frequency resolution
+- \(k\) = FFT peak-bin index
+- \(\delta^*\) = fractional peak shift
+- \(\Delta f\) = frequency resolution of the FFT
 - \(f_{\text{refined}}\) = refined frequency
 
-## Parabolic Interpolation Algorithm
+### Why is this useful?
 
 ```text
-FFT Magnitude Spectrum
-        ↓
-Locate Peak Bin k
-        ↓
-Take k-1, k and k+1
-        ↓
-Calculate Log Magnitude
-        ↓
+Discrete FFT Peak
+       ↓
+Peak may be between bins
+       ↓
 Fit Parabola
-        ↓
-Calculate Vertex Offset
-        ↓
-Calculate Fractional Shift δ
-        ↓
-Calculate Refined Frequency
+       ↓
+Find Exact Peak Position
+       ↓
+Refined Frequency
 ```
+
+This reduces the small frequency error caused by the discrete FFT bins.
 
 ---
 
@@ -693,8 +923,8 @@ Calculate Refined Frequency
 | Drop | 358.00 Hz | 359.23 Hz | +0.23 Hz |
 | Mass | 290.00 Hz | 290.37 Hz | +0.37 Hz |
 
-The correction was small for all three configurations, showing that the
-record length was already sufficient to resolve the resonance accurately.
+The corrections were small and below one FFT-bin width. The refined
+values were therefore used as the final frequency estimates. :contentReference[oaicite:14]{index=14}
 
 ---
 
@@ -703,10 +933,13 @@ record length was already sufficient to resolve the resonance accurately.
 The final comparison of the three cantilever configurations is:
 
 | Configuration | Natural Frequency (Hz) | Damping Ratio (ζ) | Quality Factor (Q) |
-|---------------|-----------------------:|------------------:|-------------------:|
+|---------------|-----------------------:|-------------------:|-------------------:|
 | Normal | 472.03 | 0.0030 | 168.5275 |
 | Drop | 358.23 | 0.0021 | 236.9374 |
 | Mass | 290.37 | 0.0015 | 326.8341 |
+
+These values are the final comparison reported in Table 5 of the latest
+project report. :contentReference[oaicite:15]{index=15}
 
 ---
 
@@ -714,16 +947,22 @@ The final comparison of the three cantilever configurations is:
 
 ## Normal Cantilever
 
-\[
-f_n = 472.03\ Hz
-\]
+Natural frequency:
 
 \[
-\zeta = 0.0030
+f_n=472.03\ Hz
 \]
 
+Damping ratio:
+
 \[
-Q = 168.5275
+\zeta=0.0030
+\]
+
+Quality factor:
+
+\[
+Q=168.5275
 \]
 
 The Normal cantilever had the highest natural frequency.
@@ -732,35 +971,47 @@ The Normal cantilever had the highest natural frequency.
 
 ## Drop Cantilever
 
-\[
-f_n = 358.23\ Hz
-\]
+Natural frequency:
 
 \[
-\zeta = 0.0021
+f_n=358.23\ Hz
 \]
+
+Damping ratio:
 
 \[
-Q = 236.9374
+\zeta=0.0021
 \]
 
-The Drop configuration showed a lower natural frequency than the Normal
-cantilever.
+Quality factor:
+
+\[
+Q=236.9374
+\]
+
+The Drop cantilever showed a lower natural frequency than the Normal
+configuration.
 
 ---
 
 ## Mass Cantilever
 
-\[
-f_n = 290.37\ Hz
-\]
+Natural frequency:
 
 \[
-\zeta = 0.0015
+f_n=290.37\ Hz
 \]
 
+Damping ratio:
+
 \[
-Q = 326.8341
+\zeta=0.0015
+\]
+
+Quality factor:
+
+\[
+Q=326.8341
 \]
 
 The Mass cantilever had the lowest natural frequency and highest quality
@@ -770,54 +1021,62 @@ factor.
 
 # 📌 Main Observations
 
-- Adding mass reduced the natural frequency.
-- The Normal cantilever had the highest natural frequency.
-- The Mass cantilever had the lowest natural frequency.
-- All three configurations were lightly damped.
-- The quality factor increased for the loaded configurations.
-- The Mass cantilever had the highest quality factor.
-- FFT provided the frequency-domain resonance peak.
-- Peak Detection provided time-domain frequency and damping information.
-- Zero-Crossing provided an independent time-domain frequency estimate.
-- Parabolic Interpolation refined the FFT peak frequency.
+### Natural Frequency
 
----
+```text
+Normal
+472.03 Hz
+   ↓
+Drop
+358.23 Hz
+   ↓
+Mass
+290.37 Hz
+```
 
-# 👩‍💻 My Contribution
+Adding mass reduced the natural frequency because the effective inertia
+of the system increased.
 
-This was a **team engineering project**.
+### Quality Factor
 
-My main contribution was in the **signal-processing and data-analysis
-part** of the project.
+```text
+Normal
+Q = 168.5275
+   ↓
+Drop
+Q = 236.9374
+   ↓
+Mass
+Q = 326.8341
+```
 
-I contributed by:
+The quality factor increased for the loaded configurations.
 
-- Developing and implementing the Fourier Transform (FFT) algorithm.
-- Developing and implementing the Peak Detection algorithm.
-- Developing and implementing the Zero-Crossing algorithm.
-- Performing natural frequency analysis.
-- Performing quality factor analysis.
-- Comparing the different cantilever configurations.
-- Preparing the results.
-- Contributing to the technical report documentation.
+The report relates the higher Q to greater stored energy relative to
+energy lost through friction and drag, and to a narrower resonance
+bandwidth. :contentReference[oaicite:16]{index=16}
 
 ---
 
 # 🛠️ Tools & Technologies
 
-| Tool / Technology | Application |
-|-------------------|-------------|
-| Python | Signal processing and analysis |
-| Jupyter | Running analysis |
+| Tool / Technology | Purpose |
+|-------------------|---------|
+| Python | Signal processing and data analysis |
+| Jupyter | Running analysis code |
 | NumPy | Numerical calculations |
-| Matplotlib | Result visualization |
+| Matplotlib | Plotting results |
 | PicoScope | Data acquisition |
 | LTspice | Circuit simulation |
-| KiCad | Circuit schematic |
-| MCP6002 | Transimpedance amplifier |
+| KiCad | Hardware schematic |
+| MCP6002 | Transimpedance stage |
 | LM324 | Differential amplifier |
 | Hamamatsu S3932 | Position Sensitive Detector |
 | GitHub | Version control |
+
+The report identifies LTspice for PSD/TIA simulation, KiCad for the final
+hardware schematic, GitHub for maintaining the codebase, and VS Code/Jupyter
+for running the Python signal-processing code. :contentReference[oaicite:17]{index=17}
 
 ---
 
@@ -832,8 +1091,10 @@ Cantilever_Project/
 │   └── Mass_Cantilever/
 │
 ├── Experimental_Setup/
-│   ├── Circuit_Schematic_Breadboard/
-│   └── System_Overview/
+│   ├── Optical_Setup/
+│   ├── Circuit_Diagram/
+│   ├── Schematic/
+│   └── Breadboard/
 │
 ├── Results/
 │   ├── FFT/
@@ -850,50 +1111,86 @@ Cantilever_Project/
 
 ---
 
-# ✅ Conclusion
+# 👩‍💻 My Contribution
 
-The cantilever vibration was successfully measured using an optical
-lever and Position Sensitive Detector.
+This was a **team engineering project**.
 
-The analogue signal-conditioning circuit converted the PSD photocurrent
-into a measurable voltage, which was acquired using PicoScope.
+My main contribution was focused on **data analysis and signal
+processing**.
 
-Python-based signal-processing methods were then used to determine the
-natural frequency, damping ratio and quality factor.
+I:
 
-The experimental results showed that adding mass to the cantilever
-reduced its natural frequency.
+- Developed and implemented the Fourier Transform algorithm.
+- Developed and implemented the Peak Detection algorithm.
+- Developed and implemented the Zero-Crossing algorithm.
+- Performed natural frequency analysis.
+- Performed quality factor analysis.
+- Compared the different cantilever configurations.
+- Prepared the project results.
+- Contributed to the technical report documentation.
 
-At the same time, the quality factor increased for the loaded
-configurations.
-
-The project provided practical experience in:
-
-- Optical measurement
-- Position sensing
-- Analogue electronics
-- Circuit simulation
-- Signal processing
-- Python programming
-- Vibration analysis
-- Experimental data analysis
-- Engineering documentation
-- Teamwork
+This contribution is explicitly listed in the final team contribution
+section of the project report. :contentReference[oaicite:18]{index=18}
 
 ---
 
 # 🤝 Team Project
 
-This project was completed as a collaborative engineering project.
+This project was completed collaboratively.
 
 The team contributed across:
 
 - Physical experimental setup
 - Optical measurement
+- Data collection
 - Transimpedance amplifier design
 - Differential amplifier design
-- SPICE simulation
-- Data collection
-- Python signal processing
+- SPICE validation
+- Schematic development
+- Signal processing
 - Results analysis
-- Technical documentation..
+- Technical documentation
+
+---
+
+# ✅ Conclusion
+
+The cantilever vibration response was successfully measured using an
+optical lever and Position Sensitive Detector.
+
+The PSD photocurrent was converted into a measurable voltage using the
+Transimpedance Amplifier and differential amplifier stages.
+
+The conditioned signal was acquired using PicoScope and analysed using
+Python.
+
+Four signal-processing methods were investigated:
+
+- Fourier Transform
+- Peak Detection
+- Zero-Crossing
+- Parabolic Interpolation
+
+The final results showed that adding mass to the cantilever reduced its
+natural frequency:
+
+\[
+472.03\ Hz
+\rightarrow
+358.23\ Hz
+\rightarrow
+290.37\ Hz
+\]
+
+At the same time, the quality factor increased:
+
+\[
+168.5275
+\rightarrow
+236.9374
+\rightarrow
+326.8341
+\]
+
+Overall, the project demonstrated a complete measurement and analysis
+chain for experimentally characterising cantilever vibration.
