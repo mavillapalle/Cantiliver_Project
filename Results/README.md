@@ -18,9 +18,9 @@ Three cantilever configurations were investigated:
 
 | Configuration | Natural Frequency (Hz) | Damping Ratio | Quality Factor |
 |---|---:|---:|---:|
-| Normal | 473.89 | 0.0049 | 102.9 |
-| Drop | 359.14 | 0.0030 | 164.7 |
-| Mass | 290.32 | 0.0016 | 311.4 |
+| Normal | 472.03 | 0.0030 | 168.5275 |
+| Drop | 358.23 | 0.0021 | 236.9374 |
+| Mass | 290.37 | 0.0015 | 326.8341 |
 
 The results show that adding mass to the cantilever reduces its natural
 frequency. The quality factor increases for the loaded cantilevers,
