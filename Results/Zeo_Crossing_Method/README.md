@@ -1,13 +1,13 @@
-Measured Signal
-      ↓
-Signal Filtering
-      ↓
-Detect Local Peaks
-      ↓
-Calculate Peak-to-Peak Time
-      ↓
+Raw Signal
+    ↓
+Butterworth Filtering
+    ↓
+Detect Zero Crossings
+    ↓
+Linear Interpolation
+    ↓
+Calculate Zero-Crossing Times
+    ↓
+Calculate Average Period
+    ↓
 Calculate Natural Frequency
-      ↓
-Analyse Amplitude Decay
-      ↓
-Calculate Damping
